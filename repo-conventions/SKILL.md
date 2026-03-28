@@ -85,6 +85,16 @@ Do not substitute a different MR/PR title unless the user explicitly asks.
 4. Push the branch (set upstream if needed).
 5. Open MR/PR with title **Update book content** and a **separate** description per [Merge requests / pull requests](#merge-requests--pull-requests).
 
+### Skills repo (`~/GitRepos/skills`)
+
+Source for Cursor Agent Skills: directories with **`SKILL.md`**, plus **`README.md`**. Same git/MR conventions as [Rules for every repository](#rules-for-every-repository-in-this-skill) unless this section adds stricter rules.
+
+#### Do not commit `*.skill` bundles
+
+- **Never** commit, push, or leave tracked **`*.skill`** files (ZIP exports from Cursor). Version **folder skills only** (e.g. `note-taker/SKILL.md`, `repo-conventions/SKILL.md`).
+- The repository **must** list **`*.skill`** in **`.gitignore`** at the repo root so exports cannot be added by mistake.
+- If `*.skill` files were committed earlier, remove them from the index with `git rm --cached '*.skill'` (optional: delete the working copies), commit, and push so remotes no longer carry them.
+
 ### Future repositories
 
 Add a new `###` subsection under [Repositories](#repositories) with: path, branch rules (use the same **`agent_update_<N>`** pattern unless you document an exception), MR/PR title (if any fixed title) and description rules, and any extra commit-message notes. **Commit format, MR title/description separation, and the no–Made-with rule** always follow [Rules for every repository](#rules-for-every-repository-in-this-skill).
