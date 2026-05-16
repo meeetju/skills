@@ -1,2 +1,5 @@
 # Cursor-exported skill ZIPs — track only <name>/SKILL.md folders (see repo-conventions skill)
 *.skill
+
+# Per-ticker EWT ASCII sketches — generated artefacts, not part of the skill itself
+stock-analyser/sketches/
