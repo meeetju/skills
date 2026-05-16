@@ -60,7 +60,7 @@ URL = https://pl.tradingview.com/symbols/EXCHANGE-SYMBOL/
 - First produce the best analysis available from accessible chart/market data.
 - If chart fidelity is limited, clearly mark confidence and assumptions, then optionally ask for anchors to refine.
 
-**Response style default (concise, top-loaded):** begin every analysis with a compact snapshot:
+**Response style default (concise, top-loaded):** every analysis response **must open with the Step 5.7 ASCII wave sketch — no exceptions**. Only after the sketch comes the compact snapshot:
 - Current price
 - Current wave and phase
 - Wave start / key anchor prices used
@@ -204,6 +204,32 @@ What changes if the impulse is complete:
 
 **Corollary for analysis output:** if the impulse is complete, the BUY ZONE band must be drawn at `0.5–0.618` of the *entire* impulse, not `0.236–0.382`. Surface this explicitly in the output and label `0.382` as **sub-`(A)` waypoint, not BUY**.
 
+**Proportional-retrace / alternation sanity check — the second-most common count error (see `graphs/nu-degree-misclassification-case.png`):**
+
+Before locking in a `(1)(2)(3)(4)(5)` count *inside* a rally, verify the **internal proportions** of the candidate sub-waves. EWT is brutally strict about how deep sub-`(2)` and sub-`(4)` are allowed to be:
+
+| Sub-wave | Typical retrace of prior leg | Hard ceiling |
+|----------|------------------------------|---------------|
+| sub-`(2)` | `0.382–0.618` of sub-`(1)` (modal `0.5`) | Rule 1: must not pass sub-`(1)` start |
+| sub-`(4)` | `0.236–0.382` of sub-`(3)` (modal `0.382`) | Rule 3: must not enter sub-`(2)` territory; **practical ceiling `0.50`** |
+| Alternation | One of `(2)/(4)` is sharp + deep, the other is sideways + shallow — **never both extreme on the same side** | If `(2)` is shallow AND `(4)` is deep, the labels are at the wrong degree |
+
+**If the candidate sub-`(2)` retraces `<0.236` of sub-`(1)` AND/OR the candidate sub-`(4)` retraces `>0.50` of sub-`(3)`, the count is WRONG.** What looks like a deep "sub-`(4)`" is almost always a **higher-degree Wave 2**, and the rally is at a different degree than assumed. Re-label up one degree:
+
+| Old (incorrect) label | New (correct) label |
+|-----------------------|---------------------|
+| sub-`(3)` peak | bigger `①` (first impulse complete) |
+| sub-`(4)` trough (deep) | bigger `②` (deep `0.5–0.618` correction of `①`) |
+| sub-`(5)` peak (and the big rally that just finished) | sub-`(1)` of bigger `③` (we are already inside Wave 3 at higher degree!) |
+| Active correction off the latest peak | sub-`(2)` of bigger `③` — *not* bigger Wave `II` |
+
+**Consequences when you mis-degree the count (the trap):**
+- You set the BUY ZONE **too low** — drawing `0.5–0.618` Fibs on the *entire* rally instead of just sub-`(1)` of bigger `③` puts the buy zone $2–4 below where it should be (e.g. NU: $11.15 vs. correct $12.43–$12.83), and you miss the actual reversal entirely.
+- You under-call the upside — the correct next major target is **bigger `③` ≈ `1.618` of bigger `①`** (a much taller projection), not `1.618` of an under-counted single impulse. For NU this changes the multi-year target from ~$36 to nothing-fixed (because we're inside `③`, the magnet is `1.618 ×①` ≈ **$29.87 to sub-`(3)` first**, then much higher for sub-`(5)`/bigger `③`).
+- The active correction is **shallower than you think** because it retraces only sub-`(1)` of `③`, not the entire prior rally — meaning the buy-window appears earlier in price and time.
+
+**Default rule:** for any candidate `(1)(2)(3)(4)(5)` count, *always* compute the actual `(2)/(1)` and `(4)/(3)` retrace ratios and check them against the table above. If either falls outside its band, presume a higher-degree miscount and re-derive at one degree up before drawing any Fibs. Anchor the active sub-`(2)` Fib block on **sub-`(1)` of bigger `③` only** (most-recent-low → most-recent-high), not on the full historical impulse.
+
 **Normal impulse — quick check:** Rules **1** and **3** first; if both hold, confirm impulse and project Wave 5 (then expect ABC). Rule 1 fail → likely still corrective. Rule 3 fail → invalid normal impulse (try ABC); overlap at **Wave 1 / Wave A** → **Leading Diagonal**; wedge + overlap at **Wave 5 / Wave C** → **Ending Diagonal** (see reference).
 
 When checking a possible **Leading Diagonal**, validate context before invalidating: start-of-structure location, sub-wave 4 as a 3-wave pullback into expected Fib zone, and (if used) support above the 200-day MA.
@@ -213,6 +239,7 @@ When checking a possible **Leading Diagonal**, validate context before invalidat
 | Rule 1 | Wave 2 never retraces past the start of Wave 1 |
 | Rule 2 | Wave 3 not shorter than **both** Wave 1 and Wave 5 |
 | Rule 3 | Wave 4 never enters Wave 2 territory |
+| Rule 4 | **Wave 5 terminal ends at or above the Wave 3 high** (uptrend) / at or below the Wave 3 low (downtrend). A Wave 5 projection that lands *below* the Wave 3 high is structurally invalid — a "failed-fifth" / truncation occurs only at the extreme high of the Wave 3 candle, never below it. **When projecting forward targets, never draw a `(5)` Fib that is lower than `(3)`** — re-derive `(5)` as `(4) low + 1.0×(1) length` (or `1.618×(1)` if extended) and verify it sits above `(3)`. |
 
 **Guidelines (common but not absolute):**
 - Wave 2 typically retraces 50–61.8% of Wave 1
@@ -223,6 +250,23 @@ When checking a possible **Leading Diagonal**, validate context before invalidat
 When Wave 4 is still forming, keep multiple valid structures active (standard ABC, flat, triangle, running-flat style) and wait for confirmation before forcing a single label.
 
 **Bigger Wave 4 commonly internalises as a sub-`(A)–(B)–(C)` zig-zag/flat** (especially after parabolic Wave 3s). When you label a recent pullback as bigger Wave 4, expect three legs and look for the `(C)` low to land inside the BUY ZONE band defined by 0.236–0.50 of bigger Wave 3. Do **not** label that pullback as bigger Wave 2; that mistake forces a deep retrace bias and misses the bigger Wave 5 that follows. See `graphs/onds-wave3-vs-wave1-case.png`.
+
+**Sub-`(1)` of a fresh impulse — anchor the terminus on prior structure, NOT on a Fib-only projection (premature-sub-`(1)` mistake — see `graphs/adur-sub1-targets-prior-ath-case.png`):**
+
+After a deep Wave 2 (typical 0.5–0.786 retrace of Wave 1), the *first sub-wave* of the new Wave 3 (sub-`(1)` of bigger `III`) almost always rallies all the way back to **the prior Wave 1 top / prior ATH** before pulling back for sub-`(2)`. The prior ATH is structural resistance — it is the natural magnet/target for sub-`(1)`. Fib-only projections (`1.618` of internal sub-legs, etc.) routinely under-shoot this target.
+
+Diagnostic — *do NOT call sub-`(1)` complete just because the rally is large*. Instead, check all three:
+
+1. **Has price reached or tested the prior swing high / Wave 1 top?** If no, sub-`(1)` is most likely **still in progress**. The big rally so far is internal `i-ii-iii-iv-v` of sub-`(1)`, not sub-`(1)` itself.
+2. **Has price broken out of the Wave-2 wedge / triangle / channel?** A descending-wedge or down-channel breakout is the structural confirmation that the corrective phase is finished. Without that breakout, the "Wave 3" call is premature.
+3. **Did the most recent pullback retrace ≥ 0.5 of the candidate sub-`(1)`?** If the pullback was only `0.236–0.382`, it is overwhelmingly likely a sub-`(iv)` *inside* sub-`(1)`, not a true sub-`(2)`. Sub-`(2)`s typically retrace `0.5–0.618`.
+
+**Consequences when you mis-label sub-`(1)` as complete (the trap):**
+- You set the BUY ZONE too high (Fibs of an under-shot sub-`(1)`) and miss adds at the real, deeper sub-`(2)`.
+- You under-size the upside: real sub-`(3)` is `1.618` of a sub-`(1)` that ran to the prior ATH (a much longer leg) — projecting from the under-shot sub-`(1)` produces sub-`(3)` targets that are 25–50% too low.
+- You declare a sub-`(2)` "shallow" and confusing because it never actually retraces — when in fact the rally is still inside sub-`(1)`.
+
+**Default rule:** until price prints **both** (a) a tag of the prior Wave 1 top **and** (b) a `0.5–0.618` retrace of that full leg, treat the active count as *sub-`(1)` still running* and the BUY ZONE as *not yet formed*. Use the prior ATH as the sub-`(1)` target and project sub-`(3)` / sub-`(5)` from a *projected* sub-`(2)` low at `0.5` of `(bigger Wave II low → prior ATH)`.
 
 ### Step 2.5 — Wave-Count Sanity Check (required before Fib levels)
 
@@ -236,6 +280,13 @@ Before drawing any Fibonacci or producing the output, answer these four question
 4. **Does the bounce off the recent low look impulsive (5 sub-waves up) or corrective (3 sub-waves up)?**
    - 5 sub-waves up → the prior low was a real bottom (Wave 4 or Wave 2 done) — bullish.
    - 3 sub-waves up → the bounce is sub-`(B)` of a still-running correction — **bearish**, expect the next leg down to the deeper BUY ZONE.
+5. **If we're in a fresh impulse off a Wave 2 low, has the rally already tested the prior Wave 1 top / prior ATH?**
+   - **No** → sub-`(1)` of bigger `III` is still in progress. The prior ATH is the target. Do *not* call any earlier swing high "sub-`(1)` complete". The current pullback is sub-`(iv)` inside sub-`(1)`, not sub-`(2)`.
+   - **Yes, with a wedge / channel breakout above the Wave-2 structure** → sub-`(1)` is at or near completion; the next significant pullback is a candidate sub-`(2)` (expect `0.5–0.618` of the *full* sub-`(1)` leg from bigger Wave 2 low to prior ATH).
+6. **Do the candidate `(2)` and `(4)` retraces honour the proportional-retrace / alternation table** (see `graphs/nu-degree-misclassification-case.png`)? Compute *actual* ratios:
+   - `retrace_(2) = ((1)_high - (2)_low) / ((1)_high - (1)_start)` — must be in `0.382–0.618`.
+   - `retrace_(4) = ((3)_high - (4)_low) / ((3)_high - (3)_start)` — must be in `0.236–0.50` (modal `0.382`).
+   - **If `(2) < 0.236` OR `(4) > 0.50`, STOP — re-degree the count up one level**: the "sub-`(3)` peak" becomes bigger `①`, the "sub-`(4)` trough" becomes bigger `②`, the "sub-`(5)` peak" becomes sub-`(1)` of bigger `③`, and the active correction is sub-`(2)` of bigger `③` (not bigger Wave `II`). Re-anchor every Fib on sub-`(1)` of bigger `③` (most-recent-low → most-recent-high) before drawing the BUY ZONE.
 
 Output the answers in one short paragraph just before the BULL/BEAR Fibonacci block. Never skip this step.
 
@@ -246,7 +297,7 @@ Output the answers in one short paragraph just before the BULL/BEAR Fibonacci bl
 | Wave 2 end | W1 start → W1 end | 50%–61.8% retrace |
 | Wave 3 end | W1 start → W1 end (expand from W2) | 161.8%–200% (extended: **261.8%**) extension |
 | Wave 4 end | W3 start → W3 end | 23.6%–38.2% retrace |
-| Wave 5 end | W4 end → W4 inverse length | 100%–161.8% (extended: **261.8%**) extension |
+| Wave 5 end | **W4 low + 1.0×(W1 length)**, extended → 1.618×(W1 length); MUST land ≥ W3 high | 100%–161.8% (extended: **261.8%**) extension |
 | Bigger-degree wave terminal | sub-(1) start → sub-(1) end | **261.8%** extension (sum-of-sub-waves target) |
 | ZZ Wave B | A start → A end | 50%–61.8% retrace |
 | ZZ Wave C | A start → A end (from B) | 100% (extended: **161.8%**) extension |
@@ -293,6 +344,21 @@ Most powerful between Wave 3 and Wave 5 peaks/troughs.
 | Inverse H&S | End of Wave 5 down | Wave A up starting |
 | Double Top/Bottom | End of Wave 5 | Flat correction likely |
 
+#### Step 5a — Structural-support cross-check (required when defining BUY ZONE)
+
+Pure Fib retraces alone are not enough — every BUY ZONE must be cross-validated against **at least one** structural reference. List those that apply, alongside the Fib levels, and call out **confluences**:
+
+| Reference | What to look for | Typical role |
+|-----------|------------------|--------------|
+| **200-week MA** | Long-term trend filter on the weekly chart | Floor under the BUY ZONE in a deep correction; if Fib `0.5–0.618` aligns with `200WMA` ± a few %, that is the highest-conviction add zone. Loss of `200WMA` after a deep retrace = "clear downside risk" — pause adds, recount. |
+| **Ascending support trendline** | Line connecting the two prior major swing lows (e.g. bigger `②` low and the prior sub-`(iv)` low) | If the trendline rises into the BUY ZONE band by the time the active sub-`(C)` is expected to bottom, treat it as a primary anchor (often *the* BUY ZONE midpoint, regardless of which Fib is closest). |
+| **Prior structural high/low** | Prior swing high (resistance turned support) or prior swing low (re-test) | Must be tagged before declaring the leg complete (see "premature sub-`(1)`" rule above). |
+| **Round numbers / volume shelves** | High-volume nodes from prior accumulation/distribution | Secondary confluence; never primary. |
+
+When two or more of `200WMA`, ascending trendline, and a Fib level cluster in a 3–5% band, the BUY ZONE is high-conviction. When the Fib stands alone, label confidence as **medium** and stage entries lighter.
+
+**Earnings as a wave-terminus catalyst:** when the active correction (sub-`(C)` of `(2)` or `(4)`) is approaching the BUY ZONE *and* an earnings release is within ~2 weeks, treat the print as a **likely catalyst for the wave terminus** — a beat + strong guide often marks the reversal, a miss often extends `(C)` to the deeper edge of the band (`0.618` / `0.786` / `200WMA`). Mention earnings timing explicitly in the analysis when within range.
+
 ### Step 5.5 — Action Recommendation (required)
 
 Always provide an explicit directional call:
@@ -337,6 +403,64 @@ Every analysis must present both scenarios side-by-side, anchored on the same ch
 - **BEAR CASE** — assumes the primary count fails: list the deeper retrace levels (typically 0.5 / 0.618 of the prior leg) and the level/condition that flips the count to corrective or to a lower degree.
 - Mark the **flip line** explicitly: the price/condition that converts the active read from bull to bear (or vice versa).
 
+### Step 5.7 — ASCII Wave Sketch (required, ALWAYS first block in the response)
+
+**Hard rule — non-negotiable:** every analysis response (full output, short summary, quick check, single-line answer, *anything*) must begin with the ASCII wave sketch. No prose, no headers, no QUICK MAP, no recommendation appears before the sketch. If the user's request only warrants a one-paragraph reply, the sketch still goes first — then the paragraph.
+
+Purpose: an instant visual anchor for where price sits inside the wave count, what the BUY ZONE band looks like, and where the next targets are. The sketch is approximate — it is *not* meant to scale and must not replace the numeric Fib block.
+
+**Allowed chars only:** `.` `_` `-` `/` `\` `(` `)` `[` `]` `←` `$` (plus letters/digits for wave labels and Fib percentages). Do **not** use left-edge price rails (`─┐ ─┤ ─┘`), vertical bars (`│`), or any unicode block characters. The price scale lives on the **right** side, embedded in each annotation as `[$price]`.
+
+**Layout (mandatory):**
+- **Left half — waveform shows ONLY past price action, never projections.** Drawn left → right (oldest on the left, newest on the right). Use `/` for up legs, `\` for down legs, `_` `-` for flats, `.` for sparse/micro detail. Label every major terminal in-line with its wave letter/number using the standard notation: bare numerals (`1 2 3 4 5`, `A B C`) for the bigger trend, parenthesised (`(1)(2)(3)(4)(5)`, `(A)(B)(C)`) for one degree below, circled (`①②③④⑤`, `Ⓐ Ⓑ Ⓒ`) only when a third degree is needed.
+- **The waveform terminates exactly at the current price.** Place `← now $X.XX` immediately after the last `/` or `\` of the past leg. **Never draw `/` or `\` characters between `now` and any future-wave tag** — the projected path from current price to the active wave's target (e.g. sub-`(1)` target) is shown ONLY by the floating tag, never by a diagonal line. If readers see a `/` or `\` in the sketch, it is unambiguously a real, past leg.
+- **Current price marker:** `← now $X.XX` written immediately after the last `/` of the most recent up-leg (or last `\` of a down-leg).
+- **Right side — annotations with bracketed prices.** Every level/target gets one row, vertically aligned with its approximate price height in the sketch, formatted as `<label> [$price]`. Examples: `0.382 BUY upper [$19.05]`, `0.50 bear deeper [$12.87]`, `hard invalidation [$5.00]`. **Do not draw horizontal dashed rails** for these — the bracketed price *is* the rail.
+- **Future wave terminals — staircase tags, no rails.** Place each upcoming wave as a single inline tag of the form `<wave> <fib> [$price]` (e.g. `(3) 1.618 [$36.84]`, `III 2.618 [$49.88]`). Two axes apply *independently*:
+  - **Horizontal axis = chronological order, strictly monotonic left → right.** Reading the tags' starting columns left-to-right MUST yield the wave-number sequence (e.g. `(1) → (3) → (4) → (5) → III`, or `(A) → (B) → (C)` for corrections). It is **never acceptable** for `(4)` or `(5)` to start at a column to the left of `(3)`, etc.
+  - **Vertical axis = price.** Each tag sits at its own price row (highest at the top). The combined effect is a zigzag staircase — e.g. `(3)` upper-left, `(4)` lower-middle (because it's a pullback), `(5)` upper-right (because price recovers), `III` highest-and-rightmost. This shape naturally mirrors the projected wave path.
+  - When laying out, allocate **at least one column gap** between the end of one tag's `[$price]` bracket and the start of the next tag, so the chronological ordering is visually unambiguous.
+- **Wave-label prefix on the BUY ZONE row.** The label on the primary `0.50` BUY ZONE row identifies **which sub-wave will land in that band** — *not* necessarily the currently-active leg. There are two sub-cases:
+  - **Active leg is a correction (sub-`(2)`, sub-`(4)`, sub-`(C)` in progress):** the active leg IS what lands in the BUY ZONE, so prefix the `0.50` row with that label — e.g. `(2)  0.50  BUY primary [$17.45]` for an active sub-(2) pullback inside bigger Wave III. Do NOT add the active leg as a separate forward staircase tag — it's already shown as the BUY-row prefix.
+  - **Active leg is an impulse (sub-`(1)` rallying after a Wave-2 terminus, sub-`(3)` running, sub-`(5)` finalising):** there is no current BUY ZONE band — the active leg is *climbing*, not landing in support. The forward staircase still contains the *next* correction's BUY band, labelled with that future wave's number — e.g. `(2)  0.50  BUY primary [$96.88]` is the future sub-(2) pullback BUY after sub-(1) tops. The active sub-(1) appears in the forward staircase as `(1) target [$X]`. Time-order across the staircase then reads naturally `(1) → (2) → (3) → (4) → III` — i.e. **`(1)` always sits to the left of `(2)`**.
+- The `0.382` (shallow) and `0.618` (deep) edges of the BUY band stay **unprefixed** — they are alternative landing zones, not the primary target.
+
+**Required elements (the sketch shows ONLY these — nothing else):**
+- All visible sub-wave terminals on the historical waveform (`(A)(B)(C)`, sub-`(1)` etc.).
+- Current latest sub-wave terminal at the right edge of the waveform with `← now $X.XX`.
+- BUY ZONE band: at minimum upper and lower Fib edges plus the mid (`0.50`), each with `[$price]`. Prefix **only the `0.50` primary row** with the active sub-wave label (e.g. `(2)`).
+- Forward staircase: at least the next-sub-wave-after-the-active-one (e.g. `(3)`), sub-`(5)`, and the bigger-wave terminal as inline staircase tags with `[$price]`. Include the intermediate pullback sub-wave (e.g. `(4)`) if it sits between them.
+
+**Never place inside the sketch (these belong in the BEAR CASE / INVALIDATION text blocks below, not on the chart):**
+- Bear-case retrace rails (`0.50 bear`, `0.618 BEAR`, `0.786 bear deep`, etc.).
+- Hard invalidation labels (`Rule 1 break`, `bigger I start`, etc.).
+- Bigger-trend start labels (e.g. `I start $3.85`, `II top`) — the waveform itself anchors the start; do not annotate it.
+- Wedge / channel / trendline overlays, breakout markers, RSI notes, MA labels, or any other study layer.
+
+The chart stays minimalist on purpose: past waveform + wave labels + current marker + BUY ZONE + forward staircase, and that is all.
+
+**Sizing & rendering:** when the sketch comfortably fits in chat, draw it inline (width up to ~90 chars, height 12–18 rows). **When the structure is wider/taller than that** (long history, many sub-degrees, lots of forward targets), do **not** compress it to fit a window — instead **save it as a standalone text file** under `sketches/<TICKER>_<YYYY-MM-DD>.txt` (create the directory if missing) and reference the path in the response. The file may be as wide and tall as needed for accurate structure.
+
+**Example (NYSE-OSCR — May 2026):**
+
+```
+                                                              III  2.618 [$49.88]
+                                                       (5)  1.618 [$45.16]
+                                          (3)  1.618 [$36.84]
+                                                (4)  1.0   [$28.79]
+        /\                       (1) ← now $22.41
+       /  \                      /
+      /    \      (B)           /          0.382 BUY shallow  [$19.05]
+     /      \    /\             /     (2)  0.50  BUY primary  [$17.45]
+    /        \  /  \           /           0.618 BUY deep     [$15.85]
+   /          \/    \         /
+  /          (A)     \       /
+ /                    \     /
+/                      \(C)/
+```
+
+The sketch must agree with the QUICK MAP, FIBONACCI LEVELS, and INVALIDATION blocks beneath it — if it conflicts with any numeric value below, fix the sketch (or the numbers) before emitting the response.
+
 ### Step 6 — Analysis Output
 
 ```
@@ -344,7 +468,12 @@ Every analysis must present both scenarios side-by-side, anchored on the same ch
 EWT ANALYSIS: [TICKER] | [DATE] | [TIMEFRAME]
 ═══════════════════════════════════════════════════
 
-⚡ QUICK MAP (always first)
+🖼  ASCII WAVE SKETCH (always first — see Step 5.7)
+   [12–18 row ASCII chart: waveform on the left with wave labels,
+    right-side annotations with [$price] brackets, and a
+    horizontal staircase of upcoming wave terminals in time order]
+
+⚡ QUICK MAP
    Current price:    [price]
    Bigger trend:     [e.g. "Wave III of impulse up from [date/price]"]
    Sub-wave (now):   [e.g. "sub-wave (1) of III complete; (2) pending"]
