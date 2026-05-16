@@ -8,6 +8,7 @@ Mati’s **[Cursor Agent Skills](https://cursor.com/docs/context/skills)**—ins
 |------|------|
 | `repo-conventions/` | Git workflow: `agent_update_*` branches, short commit subjects, MR/PR shape, no “Made-with” footers. |
 | `note-taker/` | Add or extend snippets in `~/GitRepos/book` cheatsheets in a consistent style. |
+| `stock-analyser/` | Build and extend the stock analysis tool: data fetching, technical indicators, charting. |
 
 ## Layout
 
