@@ -59,7 +59,7 @@ URL = https://pl.tradingview.com/symbols/EXCHANGE-SYMBOL/
 
 **`graphs/` — learning only, never for live analysis (required):**
 - Files under `graphs/` and `graphs/new_updates/` are **training/reference material** for updating this skill (layout examples, EWT case studies, sketch templates). They are **not** market data.
-- When the user asks you to **analyse a ticker**, do **not** open, read, or cite any image in `graphs/` — **even if the filename contains that ticker** (e.g. `nio-wave4-case-chart.png`, `oscr-bull-case-sketch-reference.png`). A stored chart may be stale, a different timeframe, or a different count than the live market.
+- When the user asks you to **analyse a ticker**, do **not** open, read, or cite any image in `graphs/` — **even if the filename contains that ticker** (e.g. `nio-wave4-case-chart.png`, `oscr-bull-case-sketch-reference.png`, `unh-capped-vs-full-projection-reference.png`). A stored chart may be stale, a different timeframe, or a different count than the live market.
 - Derive wave labels, Fib anchors, BUY ZONE, and the ASCII sketch only from **current** price action (Step 0 TradingView workflow + programmatic OHLCV). You may mention `graphs/…` only when the user is explicitly **teaching**, **updating the skill**, or **comparing** a reference image to the rules — not in a routine stock analysis response.
 
 **Self-sufficient analysis rule (required):**
@@ -279,6 +279,7 @@ Before drawing any Fibonacci or producing the output, answer these four question
    - `retrace_(2) = ((1)_high - (2)_low) / ((1)_high - (1)_start)` — must be in `0.382–0.618`.
    - `retrace_(4) = ((3)_high - (4)_low) / ((3)_high - (3)_start)` — must be in `0.236–0.50` (modal `0.382`).
    - **If `(2) < 0.236` OR `(4) > 0.50`, STOP — re-degree the count up one level**: the "sub-`(3)` peak" becomes bigger `①`, the "sub-`(4)` trough" becomes bigger `②`, the "sub-`(5)` peak" becomes sub-`(1)` of bigger `③`, and the active correction is sub-`(2)` of bigger `③` (not bigger Wave `II`). Re-anchor every Fib on sub-`(1)` of bigger `③` (most-recent-low → most-recent-high) before drawing the BUY ZONE.
+7. **Projection mode for `(3)(4)(5)`:** Is this a **post-stress / overhead-capped** leg (see **Projection mode — full impulse vs capped** under Step 3)? If yes, primary targets = **0.382–0.618 extensions from `(1)` high**; if no, primary = **1.618 from `(2)` low**. Always note both tiers when capped triggers apply.
 
 Output the answers in one short paragraph just before the BULL/BEAR Fibonacci block. Never skip this step.
 
@@ -301,6 +302,51 @@ Output the answers in one short paragraph just before the BULL/BEAR Fibonacci bl
 Never drop the `2.618` print level just because `1.618` looks adequate — it is the next confluence and the standard “runner trim” zone.
 
 Quick impulse guide: W2 often near 0.618 of W1, W3 often near 1.618 of W1 from W2 (extended near 2.618), W4 often near 0.382 of W3, W5 often close to W1 length (extended → 1.618 / 2.618), and the bigger-degree wave terminal often prints near **2.618 of the first sub-wave**.
+
+#### Projection mode — full impulse vs capped (required when forward-tagging `(3)(4)(5)`)
+
+**Lesson (UNH-class):** `(2)` BUY bands can be correct while `(3)`–`(5)` are wrong if you only print **textbook 1.618 from `(2)` 0.50** and stack placeholders on the sketch. After a **deep crash + violent bounce**, overhead resistance and extension fatigue often cap `(3)`/`(5)` near **0.382–0.618 extensions from `(1)` high**, not a full measured move to **1.618 from `(2)` low**.
+
+**Visual reference (skill maintenance only — do not open during ticker analysis):** `graphs/new_updates/unh-capped-vs-full-projection-reference.png` (NYSE-UNH daily bull case, May 2026). Use when **editing** this section or teaching capped vs full projection — never copy wave labels or prices into a live UNH analysis.
+
+**How to read that chart (learning checklist):**
+
+| On chart | What it teaches |
+|----------|-----------------|
+| Green `(1)` ~$360 / `(2)` ~$270 (2023–24) | Bigger-degree recovery after crash; white `1` ~$400 = **active sub-`(1)`**, not the whole multi-year impulse |
+| BUY ZONE ~$348 / $331 / $313 | **Same math** as textbook `(2)` 0.382–0.618 of sub-`(1)` — always anchor these first |
+| `(3)` ~$446 and `(3)`/`(5)` ~$492 | **Capped tier**: modest extensions from `(1)` high (~0.382 / ~0.618 × leg), not 1.618 from `(2)` low |
+| `(4)` ~$402 and shallow `4` ~$380 | `(4)` = **retrace of capped `(3)`**, often **overlap `(1)`** — not `(1) + 0.5×L` |
+| `(5)` ≈ `(3)` at ~$492 | **Truncation** / failed fifth at overhead — not `(3) + L` stacked to $700+ |
+| Full-tier mistake (agent) | ~$570 `(3)`, ~$478 fake `(4)`, ~$718 `(5)` — print these only under **Full (stretch)** when capped is primary |
+
+**Always compute both tiers** for the active sub-leg `(1)` start → `(1)` end (length `L`), with `(2)` projected at 0.382 / 0.50 / 0.618:
+
+| Tier | Label in output | `(3)` | `(4)` | `(5)` |
+|------|-----------------|-------|-------|-------|
+| **Full** | `Full impulse` | `(2)_primary + 1.618×L` (usually `(2)` at 0.50) | **0.382 retrace of `(3)` leg** (modal) — never `(1)_high + 0.5×L` | `(4)_low + 1.0×L` (extended `+ 1.618×L`); **must be ≥ `(3)` high** |
+| **Capped** | `Capped / overhead` | `(1)_high + 0.382×L` and `(1)_high + 0.618×L` | **0.236–0.382 of `(3)` leg** — often **overlap `(1)` high** (~`(1)_high` to `(1)_high − 0.382×L₃`) | `(4)_low + 1.0×L`; if that **< capped `(3)`**, use **truncation**: `(5) ≈ capped `(3)`** (failed fifth at resistance) |
+
+**Use capped as the primary sketch + QUICK MAP targets** when **two or more** apply:
+
+1. **Post-stress recovery** — price still **>30% below** a major prior ATH / multi-year high after a capitulation low (e.g. UNH off ~$608 ATH).
+2. **`(1)` tagged with RSI ≥ ~70** or clear blow-off at the high (extension fatigue).
+3. **Full `(3)` from `(2)` 0.50 would exceed the next obvious horizontal resistance** (prior swing high, round number, gap, 200WMA cluster) by a wide margin — sanity-check against the chart.
+4. **Bigger degree is still corrective** (bounce inside a bear flag / recovery leg after Wave `(A)–(B)–(C)` down), not a confirmed fresh multi-year Wave `3`.
+
+**Use full impulse as primary** when:
+
+- Prior ATH / prior Wave `1` top is **already tested or broken** with hold, **and**
+- `(2)` is forming with normal depth (0.382–0.618), **and**
+- No dominant overhead cap within **~1.618×L** of `(2)` primary.
+
+**Output rules (mandatory):**
+
+- In **Step 2.5**, state which tier is **primary** and why (one sentence).
+- In **FIBONACCI LEVELS**, list **both** tiers under BULL CASE — e.g. `Capped (primary): (3) $492 (0.618 from peak) …` and `Full (stretch): (3) $570 (1.618 from (2) 0.50) …`.
+- **ASCII sketch right-rail** uses **primary-tier prices only**; mention the stretch tier in text if it differs by **>10%**.
+- **Never** label `(4) 1.0` as `(1)_high + 0.5×L` or set `(5)` as `(3)_target + L` without deriving `(4)` from `(3)` and `(5)` from `(4)_low` per the table above.
+- **Trim cues** for capped mode: first trim at **capped `(3)` 0.618**; second at full tier only if structure breaks out (close above capped `(3)` on volume).
 
 Full corrective and complex correction tables: see [ewt-algorithm.md](ewt-algorithm.md).
 
@@ -391,7 +437,7 @@ Required output format (one line each, directly below the recommendation block):
 ### Step 5.6 — Bull Case vs Bear Case (required)
 
 Every analysis must present both scenarios side-by-side, anchored on the same chart structure:
-- **BULL CASE** — assumes the primary impulsive count holds: list the next sub-wave Fib retrace zones (e.g. `(2)` pullback to 0.382 / 0.5 / 0.618), then projected sub-wave `(3)`, `(4)`, `(5)` targets and the bigger-degree wave target above.
+- **BULL CASE** — assumes the primary impulsive count holds: list the next sub-wave Fib retrace zones (e.g. `(2)` pullback to 0.382 / 0.5 / 0.618), then **capped and/or full** `(3)`, `(4)`, `(5)` tiers (see Step 3 projection mode), and the bigger-degree wave target above. Mark which tier is **primary** for the sketch.
 - **BEAR CASE** — assumes the primary count fails: list the deeper retrace levels (typically 0.5 / 0.618 of the prior leg) and the level/condition that flips the count to corrective or to a lower degree.
 - Mark the **flip line** explicitly: the price/condition that converts the active read from bull to bear (or vice versa).
 
@@ -419,10 +465,7 @@ Use **only parenthesised** sub-wave labels: `(A)(B)(C)`, `(1)(2)(3)(4)(5)`. Do n
    - `(2)  0.50  BUY primary  [$X]` — prefix `(2)` (or whichever sub-wave lands in the band)
    - `0.618 BUY deep     [$X]`
 3. **Active sub-`(1)` on the waveform** (when tagged with a price): `(1)  1.0   [$X]` — the completed first impulse is the **100%** leg from `(C)`; same `[$price]` as `-> $X.XX` when target is in.
-4. **Right — forward targets (one tag per row, highest price on top):**
-   - `(5)  1.618 [$X]` (top)
-   - `(3)  1.618 [$X]`
-   - `(4)  1.0   [$X]` (between `(3)` and the active leg in price)
+4. **Right — forward targets (one tag per row, highest price on top):** use **primary projection tier** from Step 3 (capped *or* full — not both). Tag with the Fib used, e.g. `(3)  0.618 [$X]` (capped) or `(3)  1.618 [$X]` (full). `(4)` = retrace of `(3)` (modal 0.382), not a placeholder. `(5)` = extension from `(4)` low or truncation at capped `(3)`.
 
 Omit bear-case rails, invalidation lines, MAs, wedges, and RSI from the sketch.
 
@@ -478,14 +521,16 @@ Do not draw slashes **after** `-> $X.XX` on that row into forward-only territory
                               (C)
 ```
 
-#### Reference — `(1)` complete, `(2)` ongoing (NYSE-UNH style)
+#### Reference — `(1)` complete, `(2)` ongoing (NYSE-UNH style; **capped primary**)
 
 `(1)` on the crest row (no `->`, no `/\`). `-> $X.XX` on the **next** row — same row as `\` down and `/\` at the turn — so the marker sits **between `(1)` and incomplete `(2)`**. One fewer `\` row than target-reached; do not add an extra descent line above `->`.
 
+**Right-rail = capped tier** (post-crash / overhead — see Step 3 and `unh-capped-vs-full-projection-reference.png`). List **full stretch** only in the Fib block, e.g. `(3) $570 (1.618 from (2) 0.50)` — not on the sketch.
+
 ```
-                                                         (5)  1.618 [$717.98]
-                                           (3)  1.618 [$569.82]
-                                                   (4)  1.0   [$478.23]
+                                                         (5)  trunc [$492.45]
+                                           (3)  0.382 [$446.14]
+                                                   (4)  0.382 [$402.16]
                \                       (1)  1.0   [$404.15]
 -> $393.85      \                      /\
                  \      (B)           /        0.382 BUY shallow  [$347.55]
@@ -540,9 +585,9 @@ EWT ANALYSIS: [TICKER] | [DATE] | [TIMEFRAME]
 
    🟢 BULL CASE — sub-(2) pullback then (3)/(4)/(5):
       sub-(2) at: [price] (38.2%) / [price] (50%) / [price] (61.8%)
-      sub-(3) target: [price] (1.618 ext) → extended [price] (2.618 ext)
-      sub-(4) pullback: [price] (~0.382 of sub-(3))
-      sub-(5) target: [price] (1.0–1.618 ext) → extended [price] (2.618 ext)
+      Projection mode: [Capped primary / Full primary / Both — reason]
+      Capped (if applicable): (3) [price] (0.382 from peak) / [price] (0.618) · (4) [price] (0.382 of (3)) · (5) [price] (from (4) or truncation)
+      Full stretch: (3) [price] (1.618 from (2) 0.50) → [price] (2.618) · (4) [price] · (5) [price] (must be ≥ (3))
       Bigger wave target: [price] (2.618 of sub-(1) — sum-of-sub-waves)
 
    🔴 BEAR CASE — count failure / deeper correction:
@@ -661,7 +706,7 @@ stock-analyser/
   data/       # cached raw OHLCV files
   charts/     # generated chart outputs (live analysis)
   graphs/     # learning/reference images only — never read for live ticker analysis
-  graphs/new_updates/  # draft reference charts for optimising skill/sketch rules
+  graphs/new_updates/  # draft reference charts (e.g. oscr-bull-case-sketch, unh-capped-vs-full-projection)
   src/        # source code
   tests/      # unit tests for indicators
   README.md
@@ -672,6 +717,12 @@ stock-analyser/
 ## When learning new things for this project
 
 Use `graphs/` when ingesting examples or tuning rules — **not** when answering “analyse [ticker]”. See **`graphs/` — learning only** under Step 0.
+
+When the user supplies a **marked-up chart** (screenshot, TradingView export) to teach a rule:
+
+1. Save under `graphs/new_updates/<topic>-reference.png` (e.g. `unh-capped-vs-full-projection-reference.png`).
+2. Add a **How to read** table + **skill-maintenance-only** pointer in the relevant `SKILL.md` section (Step 3 projection mode, Step 5.7 sketch, etc.).
+3. Do **not** wire that file into live analysis workflows — filenames may contain a ticker; Step 0 still forbids opening `graphs/` on “analyse [ticker]”.
 
 When the user pastes course notes, lessons, or other reference material and asks to update the skill:
 
