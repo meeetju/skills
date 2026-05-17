@@ -17,6 +17,8 @@ description: |
   Trigger phrases: "analyse [ticker]", "where are we in [ticker]", "EWT analysis",
   "Elliott Wave", "fib levels for", "what wave are we in", "add or trim", "wave count",
   "stock analyser", "add indicator", "fetch price data".
+
+  For live ticker analysis: use TradingView + OHLCV only — never read graphs/ (learning images only).
 ---
 
 # Stock Analyser
@@ -52,8 +54,13 @@ URL = https://pl.tradingview.com/symbols/EXCHANGE-SYMBOL/
 
 **Anchor priority for levels/counts:**
 1. User-provided chart anchors/labels (highest priority)
-2. Direct chart structure (swing highs/lows, MA, Fib)
+2. Direct chart structure (swing highs/lows, MA, Fib) from **live** data (TradingView, OHLCV fetch, user upload)
 3. External quote/news data (context only, not primary for wave anchors)
+
+**`graphs/` — learning only, never for live analysis (required):**
+- Files under `graphs/` and `graphs/new_updates/` are **training/reference material** for updating this skill (layout examples, EWT case studies, sketch templates). They are **not** market data.
+- When the user asks you to **analyse a ticker**, do **not** open, read, or cite any image in `graphs/` — **even if the filename contains that ticker** (e.g. `nio-wave4-case-chart.png`, `oscr-bull-case-sketch-reference.png`). A stored chart may be stale, a different timeframe, or a different count than the live market.
+- Derive wave labels, Fib anchors, BUY ZONE, and the ASCII sketch only from **current** price action (Step 0 TradingView workflow + programmatic OHLCV). You may mention `graphs/…` only when the user is explicitly **teaching**, **updating the skill**, or **comparing** a reference image to the rules — not in a routine stock analysis response.
 
 **Self-sufficient analysis rule (required):**
 - Never block analysis waiting for the user to upload a chart.
@@ -99,21 +106,6 @@ Confirm with Higher Highs/Higher Lows (uptrend) or Lower Highs/Lower Lows (downt
 - Accept either: single V-bounce or multi-test base with HH/HL progression
 - Strengthen confidence with bounce volume, bullish candles, and RSI/MACD divergence
 - Downgrade confidence ahead of binary events (earnings/guidance, investigations, macro shock risk)
-
-**BUY ZONE construction (multi-anchor confluence — see `graphs/onds-wave3-vs-wave1-case.png` and `graphs/crm-buy-zone-band-case.png`):**
-- A BUY ZONE is **always a band**, not a single Fib level. The band has explicit **upper edge** and **lower edge** Fibs.
-- **Default Fib bands by wave identity:**
-  - Shallow Wave 4 (in-progress impulse): `0.236 → 0.50` of bigger Wave 3
-  - Deep correction (post-impulse, bigger Wave 2 / `(C)` of higher-degree A-B-C): **`0.786 → 0.886`** of the entire prior impulse — *this is the most common BUY ZONE band on weekly charts*
-  - Standard Wave 2 of a still-fresh impulse: `0.50 → 0.618`
-- Build the band from the overlap of *at least two* of the following anchors:
-  - Retracement of the **bigger prior wave** (Fib upper + lower edge)
-  - Retracement of the **immediately prior sub-leg** (e.g. `0.50–0.786` of sub-`(B)`)
-  - Sub-wave-`(C)` typical zone (`0.5–0.618` of sub-`(A)` projected from sub-`(B)` peak, or `(C) ≈ 1.0–1.618 × (A)`)
-  - Prior **structural support** (horizontal blue line)
-  - **Trendline** support (yellow ascending or descending)
-  - Key **moving average** (50/200 SMA)
-- A **single Fib retrace by itself is not a BUY ZONE**. Cite all anchors in the analysis output.
 
 **Tiered-entry playbook (mandatory when price is at or inside the BUY ZONE band):**
 
@@ -405,61 +397,109 @@ Every analysis must present both scenarios side-by-side, anchored on the same ch
 
 ### Step 5.7 — ASCII Wave Sketch (required, ALWAYS first block in the response)
 
-**Hard rule — non-negotiable:** every analysis response (full output, short summary, quick check, single-line answer, *anything*) must begin with the ASCII wave sketch. No prose, no headers, no QUICK MAP, no recommendation appears before the sketch. If the user's request only warrants a one-paragraph reply, the sketch still goes first — then the paragraph.
+**Hard rule:** every analysis response begins with the ASCII sketch — no headers, QUICK MAP, or recommendation before it.
 
-Purpose: an instant visual anchor for where price sits inside the wave count, what the BUY ZONE band looks like, and where the next targets are. The sketch is approximate — it is *not* meant to scale and must not replace the numeric Fib block.
+**Visual reference (skill maintenance only — do not open during ticker analysis):** `graphs/new_updates/oscr-bull-case-sketch-reference.png` shows the canonical bull-case layout (`(A)–(B)–(C)`, BUY ZONE, `(3)(4)(5)` targets). Use it only when **editing** Step 5.7 or adding new images to `graphs/new_updates/`. For a live analysis request, replicate the **layout** from the ASCII templates below using **live** anchors — never copy prices or wave labels from that file.
 
-**Allowed chars only:** `.` `_` `-` `/` `\` `(` `)` `[` `]` `←` `$` (plus letters/digits for wave labels and Fib percentages). Do **not** use left-edge price rails (`─┐ ─┤ ─┘`), vertical bars (`│`), or any unicode block characters. The price scale lives on the **right** side, embedded in each annotation as `[$price]`.
+The ASCII sketch mirrors that layout: time flows **left → right** on the waveform; **`-> $X.XX` is always left-flush** (start of its row, left margin of the chart); the **BUY ZONE** band sits mid-chart; forward `(3)(4)(5)` targets stack on the **right**. Numeric detail lives in the Fib block below.
 
-**Layout (mandatory):**
-- **Left half — waveform shows ONLY past price action, never projections.** Drawn left → right (oldest on the left, newest on the right). Use `/` for up legs, `\` for down legs, `_` `-` for flats, `.` for sparse/micro detail. Label every major terminal in-line with its wave letter/number using the standard notation: bare numerals (`1 2 3 4 5`, `A B C`) for the bigger trend, parenthesised (`(1)(2)(3)(4)(5)`, `(A)(B)(C)`) for one degree below, circled (`①②③④⑤`, `Ⓐ Ⓑ Ⓒ`) only when a third degree is needed.
-- **The waveform terminates exactly at the current price.** Place `← now $X.XX` immediately after the last `/` or `\` of the past leg. **Never draw `/` or `\` characters between `now` and any future-wave tag** — the projected path from current price to the active wave's target (e.g. sub-`(1)` target) is shown ONLY by the floating tag, never by a diagonal line. If readers see a `/` or `\` in the sketch, it is unambiguously a real, past leg.
-- **Current price marker:** `← now $X.XX` written immediately after the last `/` of the most recent up-leg (or last `\` of a down-leg).
-- **Right side — annotations with bracketed prices.** Every level/target gets one row, vertically aligned with its approximate price height in the sketch, formatted as `<label> [$price]`. Examples: `0.382 BUY upper [$19.05]`, `0.50 bear deeper [$12.87]`, `hard invalidation [$5.00]`. **Do not draw horizontal dashed rails** for these — the bracketed price *is* the rail.
-- **Future wave terminals — staircase tags, no rails.** Place each upcoming wave as a single inline tag of the form `<wave> <fib> [$price]` (e.g. `(3) 1.618 [$36.84]`, `III 2.618 [$49.88]`). Two axes apply *independently*:
-  - **Horizontal axis = chronological order, strictly monotonic left → right.** Reading the tags' starting columns left-to-right MUST yield the wave-number sequence (e.g. `(1) → (3) → (4) → (5) → III`, or `(A) → (B) → (C)` for corrections). It is **never acceptable** for `(4)` or `(5)` to start at a column to the left of `(3)`, etc.
-  - **Vertical axis = price.** Each tag sits at its own price row (highest at the top). The combined effect is a zigzag staircase — e.g. `(3)` upper-left, `(4)` lower-middle (because it's a pullback), `(5)` upper-right (because price recovers), `III` highest-and-rightmost. This shape naturally mirrors the projected wave path.
-  - When laying out, allocate **at least one column gap** between the end of one tag's `[$price]` bracket and the start of the next tag, so the chronological ordering is visually unambiguous.
-- **Wave-label prefix on the BUY ZONE row.** The label on the primary `0.50` BUY ZONE row identifies **which sub-wave will land in that band** — *not* necessarily the currently-active leg. There are two sub-cases:
-  - **Active leg is a correction (sub-`(2)`, sub-`(4)`, sub-`(C)` in progress):** the active leg IS what lands in the BUY ZONE, so prefix the `0.50` row with that label — e.g. `(2)  0.50  BUY primary [$17.45]` for an active sub-(2) pullback inside bigger Wave III. Do NOT add the active leg as a separate forward staircase tag — it's already shown as the BUY-row prefix.
-  - **Active leg is an impulse (sub-`(1)` rallying after a Wave-2 terminus, sub-`(3)` running, sub-`(5)` finalising):** there is no current BUY ZONE band — the active leg is *climbing*, not landing in support. The forward staircase still contains the *next* correction's BUY band, labelled with that future wave's number — e.g. `(2)  0.50  BUY primary [$96.88]` is the future sub-(2) pullback BUY after sub-(1) tops. The active sub-(1) appears in the forward staircase as `(1) target [$X]`. Time-order across the staircase then reads naturally `(1) → (2) → (3) → (4) → III` — i.e. **`(1)` always sits to the left of `(2)`**.
-- The `0.382` (shallow) and `0.618` (deep) edges of the BUY band stay **unprefixed** — they are alternative landing zones, not the primary target.
+#### Allowed characters
 
-**Required elements (the sketch shows ONLY these — nothing else):**
-- All visible sub-wave terminals on the historical waveform (`(A)(B)(C)`, sub-`(1)` etc.).
-- Current latest sub-wave terminal at the right edge of the waveform with `← now $X.XX`.
-- BUY ZONE band: at minimum upper and lower Fib edges plus the mid (`0.50`), each with `[$price]`. Prefix **only the `0.50` primary row** with the active sub-wave label (e.g. `(2)`).
-- Forward staircase: at least the next-sub-wave-after-the-active-one (e.g. `(3)`), sub-`(5)`, and the bigger-wave terminal as inline staircase tags with `[$price]`. Include the intermediate pullback sub-wave (e.g. `(4)`) if it sits between them.
+`.` `_` `-` `/` `\` `(` `)` `[` `]` `>` `$`, plus wave digits/letters and Fib percentages. Use `-> $price` for the current-price marker (left-flush). No box-drawing or unicode block chars.
 
-**Never place inside the sketch (these belong in the BEAR CASE / INVALIDATION text blocks below, not on the chart):**
-- Bear-case retrace rails (`0.50 bear`, `0.618 BEAR`, `0.786 bear deep`, etc.).
-- Hard invalidation labels (`Rule 1 break`, `bigger I start`, etc.).
-- Bigger-trend start labels (e.g. `I start $3.85`, `II top`) — the waveform itself anchors the start; do not annotate it.
-- Wedge / channel / trendline overlays, breakout markers, RSI notes, MA labels, or any other study layer.
+#### Labels on the sketch
 
-The chart stays minimalist on purpose: past waveform + wave labels + current marker + BUY ZONE + forward staircase, and that is all.
+Use **only parenthesised** sub-wave labels: `(A)(B)(C)`, `(1)(2)(3)(4)(5)`. Do not put bigger-degree counts (bare `1–5`, Roman numerals, etc.) on the sketch — state those in the text below.
 
-**Sizing & rendering:** when the sketch comfortably fits in chat, draw it inline (width up to ~90 chars, height 12–18 rows). **When the structure is wider/taller than that** (long history, many sub-degrees, lots of forward targets), do **not** compress it to fit a window — instead **save it as a standalone text file** under `sketches/<TICKER>_<YYYY-MM-DD>.txt` (create the directory if missing) and reference the path in the response. The file may be as wide and tall as needed for accurate structure.
+#### What every sketch includes
 
-**Example (NYSE-OSCR — May 2026):**
+1. **Left — history:** `/` up, `\` down; label `(A)`, `(B)`, `(C)` through the correction; `(C)` at the bottom.
+2. **Middle — active leg + BUY band (three rows, prices right-aligned):**
+   - `0.382 BUY shallow  [$X]`
+   - `(2)  0.50  BUY primary  [$X]` — prefix `(2)` (or whichever sub-wave lands in the band)
+   - `0.618 BUY deep     [$X]`
+3. **Active sub-`(1)` on the waveform** (when tagged with a price): `(1)  1.0   [$X]` — the completed first impulse is the **100%** leg from `(C)`; same `[$price]` as `-> $X.XX` when target is in.
+4. **Right — forward targets (one tag per row, highest price on top):**
+   - `(5)  1.618 [$X]` (top)
+   - `(3)  1.618 [$X]`
+   - `(4)  1.0   [$X]` (between `(3)` and the active leg in price)
+
+Omit bear-case rails, invalidation lines, MAs, wedges, and RSI from the sketch.
+
+#### `-> $X.XX` placement (mandatory)
+
+- **Always left-flush** — `-> $X.XX` is the first token on its row (left margin of the sketch). Never trail it after a wave label or at the right edge (wrong: `(1) -> $22.41`, `\  / -> $12`).
+- The waveform on that row continues **to the right** of the price marker.
+- Wave labels `(1)`, `(2)`, `(A)`, etc. sit on the structure **without** embedding `now`.
+
+| Condition | Sketch behaviour |
+|-----------|------------------|
+| **Active wave target is in** (price still at sub-`(1)` high) | Same crest as below: `(1)  1.0   [$X]` upper-right; left-flush `-> $X.XX` on the **`(1)` row** (see OSCR reference) |
+| **Target not reached yet** | `(1)  1.0   [$X]` on the projected peak; left-flush `-> $X.XX` on a row still climbing toward `(1)` (see target-not-reached reference) |
+| **(1) complete, (2) ongoing** | `(1)  1.0   [$X]` on the **crest row** (leading `\` only — **no `/\`, no `->`**) — price is **between `(1)` and `(2)`**. Next row: left-flush `-> $X.XX` on the **same row** as `\` down and `/\` at the turn (one fewer `\` row than target-reached). Following rows: **`\` through `(B)` / BUY band**; `(2)` incomplete until price tags the band (see UNH reference) |
+
+Do not draw slashes **after** `-> $X.XX` on that row into forward-only territory. Forward targets stay floating tags on the right.
+
+#### Reference — target reached (NYSE-OSCR style; `(1)` high in)
 
 ```
-                                                              III  2.618 [$49.88]
-                                                       (5)  1.618 [$45.16]
-                                          (3)  1.618 [$36.84]
-                                                (4)  1.0   [$28.79]
-        /\                       (1) ← now $22.41
-       /  \                      /
-      /    \      (B)           /          0.382 BUY shallow  [$19.05]
-     /      \    /\             /     (2)  0.50  BUY primary  [$17.45]
-    /        \  /  \           /           0.618 BUY deep     [$15.85]
-   /          \/    \         /
-  /          (A)     \       /
- /                    \     /
-/                      \(C)/
+                                                         (5)  1.618 [$45.16]
+                                           (3)  1.618 [$36.84]
+                                                   (4)  1.0   [$28.79]
+-> $22.41      \                       (1)  1.0   [$22.41]
+                \                      /
+                 \      (B)           /        0.382 BUY shallow  [$19.05]
+                  \    /\            /    (2)  0.50  BUY primary  [$17.45]
+                   \  /  \          /          0.618 BUY deep     [$15.85]
+                    \/    \        /
+                   (A)     \      /
+                            \    /
+                             \  /
+                              \/
+                              (C)
 ```
 
-The sketch must agree with the QUICK MAP, FIBONACCI LEVELS, and INVALIDATION blocks beneath it — if it conflicts with any numeric value below, fix the sketch (or the numbers) before emitting the response.
+#### Reference — target not yet reached
+
+```
+                                                         (5)  1.618 [$45.16]
+                                           (3)  1.618 [$36.84]
+                                                   (4)  1.0   [$28.79]
+                \                       (1)  1.0   [$22.41]
+                 \
+                  \      (B)                   0.382 BUY shallow  [$19.05]
+                   \    /\                (2)  0.50  BUY primary  [$17.45]
+                    \  /  \                    0.618 BUY deep     [$15.85]
+                     \/    \
+                    (A)     \
+                             \
+-> $12.00                     \  /
+                               \/
+                              (C)
+```
+
+#### Reference — `(1)` complete, `(2)` ongoing (NYSE-UNH style)
+
+`(1)` on the crest row (no `->`, no `/\`). `-> $X.XX` on the **next** row — same row as `\` down and `/\` at the turn — so the marker sits **between `(1)` and incomplete `(2)`**. One fewer `\` row than target-reached; do not add an extra descent line above `->`.
+
+```
+                                                         (5)  1.618 [$717.98]
+                                           (3)  1.618 [$569.82]
+                                                   (4)  1.0   [$478.23]
+               \                       (1)  1.0   [$404.15]
+-> $393.85      \                      /\
+                 \      (B)           /        0.382 BUY shallow  [$347.55]
+                  \    /\            /    (2)  0.50  BUY primary  [$330.06]
+                   \  /  \          /          0.618 BUY deep     [$312.57]
+                    \/    \        /
+                   (A)     \      /
+                            \    /
+                             \  /
+                              \/
+                              (C)
+```
+
+Match prices to the QUICK MAP and FIBONACCI blocks; fix the sketch or the numbers if they disagree. If the sketch is too wide for chat, save it under `sketches/<TICKER>_<YYYY-MM-DD>.txt` and link the path.
 
 ### Step 6 — Analysis Output
 
@@ -469,14 +509,12 @@ EWT ANALYSIS: [TICKER] | [DATE] | [TIMEFRAME]
 ═══════════════════════════════════════════════════
 
 🖼  ASCII WAVE SKETCH (always first — see Step 5.7)
-   [12–18 row ASCII chart: waveform on the left with wave labels,
-    right-side annotations with [$price] brackets, and a
-    horizontal staircase of upcoming wave terminals in time order]
+   [(A)(B)(C) history + BUY band + (3)(4)(5) targets; -> $price always left-flush on its row]
 
 ⚡ QUICK MAP
    Current price:    [price]
-   Bigger trend:     [e.g. "Wave III of impulse up from [date/price]"]
-   Sub-wave (now):   [e.g. "sub-wave (1) of III complete; (2) pending"]
+   Bigger trend:     [e.g. "Wave 3 of impulse up from [date/price]"]
+   Sub-wave (now):   [e.g. "sub-wave (1) of Wave 3 complete; (2) pending"]
    Phase:            [Motive / Corrective]
    Wave anchors:     [W1 start, W1 end, W2 low or equivalent]
    Next targets:     [Target 1, Target 2, Target 3 + Fib labels]
@@ -621,7 +659,9 @@ The EWT analysis in Part 1 is currently manual (TradingView + screenshots). The 
 ```
 stock-analyser/
   data/       # cached raw OHLCV files
-  charts/     # generated chart outputs
+  charts/     # generated chart outputs (live analysis)
+  graphs/     # learning/reference images only — never read for live ticker analysis
+  graphs/new_updates/  # draft reference charts for optimising skill/sketch rules
   src/        # source code
   tests/      # unit tests for indicators
   README.md
@@ -630,6 +670,8 @@ stock-analyser/
 ---
 
 ## When learning new things for this project
+
+Use `graphs/` when ingesting examples or tuning rules — **not** when answering “analyse [ticker]”. See **`graphs/` — learning only** under Step 0.
 
 When the user pastes course notes, lessons, or other reference material and asks to update the skill:
 
